@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guía de estilos · DistriLink</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-3); }
+    .swatch { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); font-size: var(--text-xs); }
+    .swatch div { height: 56px; }
+    .swatch p { padding: var(--space-2); font-family: var(--font-mono); color: var(--color-text-muted); }
+    .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    code { font-family: var(--font-mono); font-size: .85em; background: var(--color-brand-50); padding: 1px 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header class="navbar"><div class="navbar__inner"><span class="navbar__brand">DistriLink <span>Guía de estilos</span></span></div></header>
+
+  <main class="page">
+    <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="/pages/dev/sesion-demo.html">Desarrollo</a></li><li><span aria-current="page">Guía de estilos</span></li></ol></nav>
+
+    <div class="page-header">
+      <div>
+        <h1>Guía de estilos</h1>
+        <p>Todos los componentes compartidos. Copia el HTML de aquí; no inventes estilos nuevos en tu pantalla.</p>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Colores</h2>
+      <div class="swatches">
+        <div class="swatch"><div style="background:var(--color-brand-900)"></div><p>--color-brand-900<br>barra</p></div>
+        <div class="swatch"><div style="background:var(--color-brand-700)"></div><p>--color-brand-700<br>botón principal</p></div>
+        <div class="swatch"><div style="background:var(--color-brand-100)"></div><p>--color-brand-100</p></div>
+        <div class="swatch"><div style="background:var(--color-text)"></div><p>--color-text</p></div>
+        <div class="swatch"><div style="background:var(--color-text-muted)"></div><p>--color-text-muted</p></div>
+        <div class="swatch"><div style="background:var(--color-bg)"></div><p>--color-bg</p></div>
+        <div class="swatch"><div style="background:var(--color-pending)"></div><p>--color-pending</p></div>
+        <div class="swatch"><div style="background:var(--color-success)"></div><p>--color-success</p></div>
+        <div class="swatch"><div style="background:var(--color-danger)"></div><p>--color-danger</p></div>
+        <div class="swatch"><div style="background:var(--color-info)"></div><p>--color-info</p></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Estados del pedido</h2>
+      <p>Siempre color + ícono + texto. En JS: <code>statusBadge("CONFIRMED")</code> de <code>/js/ui.js</code>.</p>
+      <div class="row" id="badges"></div>
+    </section>
+
+    <section class="card">
+      <h2>Botones</h2>
+      <div class="row">
+        <button class="btn btn--primary" type="button">Enviar pedido</button>
+        <button class="btn btn--secondary" type="button">Cancelar</button>
+        <button class="btn btn--success" type="button">Aprobar</button>
+        <button class="btn btn--danger" type="button">Rechazar</button>
+        <button class="btn btn--ghost" type="button">Ver detalle</button>
+        <button class="btn btn--primary btn--sm" type="button">Pequeño</button>
+        <button class="btn btn--primary" type="button" disabled>Agotado</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Formulario</h2>
+      <form class="form" id="demo-form" novalidate style="max-width:420px">
+        <div class="field" data-field="name">
+          <label for="f-name">Nombre del producto</label>
+          <input class="input" id="f-name" name="name" placeholder="Arroz Diana 500 g">
+        </div>
+        <div class="field" data-field="price">
+          <label for="f-price">Precio (COP)</label>
+          <input class="input" id="f-price" name="price" type="number" min="0" placeholder="2300">
+          <p class="hint">Sin puntos ni signo de pesos.</p>
+        </div>
+        <button class="btn btn--primary" type="submit">Probar errores de validación</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Alertas</h2>
+      <div class="alert alert--success">El producto se guardó.</div>
+      <div class="alert alert--danger">No se pudo enviar el pedido: el producto Arroz 500 g ya no tiene existencias suficientes.</div>
+      <div class="alert alert--warning">Tienes 3 productos con poco stock.</div>
+      <div class="alert alert--info">Tu pedido #120 fue despachado.</div>
+      <div class="row"><button class="btn btn--secondary btn--sm" type="button" id="t1">Mostrar toast</button></div>
+    </section>
+
+    <section>
+      <h2 style="margin-bottom:var(--space-3)">Tabla</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Pedido</th><th>Cliente</th><th>Fecha</th><th class="num">Total</th><th>Estado</th></tr></thead>
+          <tbody id="demo-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Estado vacío</h2>
+      <div class="empty">
+        <p><b>Todavía no tienes pedidos.</b></p>
+        <p>Cuando envíes tu primer pedido, aparecerá aquí con su estado.</p>
+        <a class="btn btn--primary" href="#">Ir al catálogo</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { statusBadge, formatMoney, formatDate, toast, showFieldErrors } from "/js/ui.js";
+    document.getElementById("badges").innerHTML =
+      ["PENDING", "CONFIRMED", "REJECTED", "DISPATCHED", "CANCELLED"].map(statusBadge).join("");
+    const rows = [
+      [120, "Tienda Don Pepe", "2026-11-12T09:15:00", 27600, "PENDING"],
+      [118, "Minimercado La 15", "2026-11-11T16:40:00", 154000, "CONFIRMED"],
+      [117, "Tienda El Paisa", "2026-11-11T11:05:00", 48500, "DISPATCHED"],
+      [115, "Granero San Pedro", "2026-11-10T08:20:00", 92300, "REJECTED"],
+    ];
+    document.getElementById("demo-rows").innerHTML = rows.map(([id, c, d, t, s]) =>
+      `<tr><td>#${id}</td><td>${c}</td><td>${formatDate(d)}</td><td class="num">${formatMoney(t)}</td><td>${statusBadge(s)}</td></tr>`).join("");
+    document.getElementById("t1").addEventListener("click", () => toast("Producto agregado al carrito", "success"));
+    document.getElementById("demo-form").addEventListener("submit", e => {
+      e.preventDefault();
+      showFieldErrors(e.target, { name: "El nombre es obligatorio", price: "El precio debe ser mayor que 0" });
+    });
+  </script>
+</body>
+</html>

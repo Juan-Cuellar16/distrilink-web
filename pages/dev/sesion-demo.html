@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sesión de prueba · DistriLink</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <main class="page" style="max-width:520px">
+    <div class="alert alert--warning">
+      <b>Solo para desarrollo.</b> Simula un usuario con sesión iniciada para construir pantallas antes de que exista el login real.
+      No envía ningún token al backend: las llamadas a la API que pidan autenticación van a responder 401.
+    </div>
+    <section class="card">
+      <h1>Entrar como…</h1>
+      <p class="hint">Después de elegir, se abre la plantilla con la barra de navegación de ese rol.</p>
+      <div class="form">
+        <button class="btn btn--primary btn--block" type="button" data-role="CUSTOMER">Cliente · Tienda Don Pepe</button>
+        <button class="btn btn--secondary btn--block" type="button" data-role="DISTRIBUTOR">Distribuidor · Distribuidora El Sol</button>
+        <button class="btn btn--ghost btn--block" type="button" data-clear>Cerrar la sesión de prueba</button>
+      </div>
+      <p id="estado" class="hint"></p>
+    </section>
+    <a href="/pages/guia-estilos.html">Ver la guía de estilos</a>
+  </main>
+  <script type="module">
+    import { startDemoSession, clearSession, getUser } from "/js/session.js";
+    import { DEV_MODE } from "/js/config.js";
+    const estado = document.getElementById("estado");
+    const show = () => { const u = getUser(); estado.textContent = u ? `Sesión actual: ${u.name} (${u.role})` : "Sin sesión."; };
+    if (!DEV_MODE) {
+      document.querySelectorAll("button").forEach(b => b.disabled = true);
+      estado.textContent = "DEV_MODE está apagado en js/config.js.";
+    } else {
+      document.querySelectorAll("[data-role]").forEach(b => b.addEventListener("click", () => {
+        startDemoSession(b.dataset.role);
+        window.location.href = "/pages/plantilla.html";
+      }));
+      document.querySelector("[data-clear]").addEventListener("click", () => { clearSession(); show(); });
+      show();
+    }
+  </script>
+</body>
+</html>

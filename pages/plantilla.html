@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plantilla · DistriLink</title>
+  <!-- 1. Siempre estas 4 líneas de estilos -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <!--
+    PLANTILLA PARA COPIAR
+    1. Copia este archivo a pages/cliente/ o pages/distribuidor/ con el nombre de tu pantalla.
+    2. Cambia el <title>, la clave de renderNavbar(), las migas de pan y el contenido de <main>.
+    3. Cambia requireRole() por "CUSTOMER" o "DISTRIBUTOR" según tu pantalla.
+  -->
+  <header id="navbar"></header>
+
+  <main class="page">
+    <nav id="breadcrumb"></nav>
+
+    <div class="page-header">
+      <div>
+        <h1>Título de la pantalla</h1>
+        <p>Una línea que explica qué puede hacer el usuario aquí.</p>
+      </div>
+      <a class="btn btn--primary" href="#">Acción principal</a>
+    </div>
+
+    <section class="card">
+      <h2>Contenido</h2>
+      <p>Aquí va el contenido de tu pantalla. Usa los componentes de <a href="/pages/guia-estilos.html">la guía de estilos</a>.</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { requireRole } from "/js/session.js";
+    import { renderNavbar } from "/js/navbar.js";
+    import { renderBreadcrumb } from "/js/breadcrumb.js";
+    // import { api } from "/js/api.js";
+    // import { toast, statusBadge, formatMoney } from "/js/ui.js";
+
+    const user = requireRole();          // "CUSTOMER" o "DISTRIBUTOR" en tu pantalla
+    if (user) {
+      renderNavbar("inicio");            // clave del enlace activo del menú
+      renderBreadcrumb([
+        ["Inicio", user.role === "DISTRIBUTOR" ? "/pages/distribuidor/inicio.html" : "/pages/cliente/inicio.html"],
+        ["Título de la pantalla"],
+      ]);
+      // Aquí va la lógica de tu pantalla, por ejemplo:
+      // const productos = await api.get("catalog", "/api/products");
+    }
+  </script>
+</body>
+</html>
