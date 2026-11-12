@@ -6,9 +6,11 @@
   <title>DistriLink</title>
   <script type="module">
     import { getUser } from "/js/session.js";
-    import { ROUTES } from "/js/config.js";
+    import { ROUTES, DEV_MODE, loginPage } from "/js/config.js";
     const user = getUser();
-    window.location.replace(user ? ROUTES.home[user.role] : ROUTES.login);
+    // While DEV_MODE is on, the home pages may not exist yet: land on the template.
+    const home = user && (DEV_MODE ? "/pages/plantilla.html" : ROUTES.home[user.role]);
+    window.location.replace(home || loginPage());
   </script>
 </head>
 <body>

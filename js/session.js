@@ -1,7 +1,7 @@
 // =========================================================
 // DistriLink — Session (JWT in the browser)
 // =========================================================
-import { ROUTES, DEV_MODE } from "./config.js";
+import { ROUTES, DEV_MODE, loginPage } from "./config.js";
 
 const KEY = "distrilink.session";
 
@@ -51,7 +51,7 @@ export function clearSession() {
 
 export function logout() {
   clearSession();
-  window.location.href = ROUTES.login;
+  window.location.href = loginPage();
 }
 
 /**
@@ -62,8 +62,8 @@ export function logout() {
  */
 export function requireRole(role) {
   const user = getUser();
-  if (!user) { window.location.href = ROUTES.login; return null; }
-  if (role && user.role !== role) { window.location.href = ROUTES.home[user.role] || ROUTES.login; return null; }
+  if (!user) { window.location.href = loginPage(); return null; }
+  if (role && user.role !== role) { window.location.href = ROUTES.home[user.role] || loginPage(); return null; }
   return user;
 }
 
