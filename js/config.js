@@ -25,6 +25,10 @@ export const ROUTES = {
 };
 
 // true while developing: enables /pages/dev/sesion-demo.html
-// to simulate a logged-in user before the real login exists.
-// Set to false before the final delivery.
+// to simulate a logged-in user before the real login exists,
+// and sends users without a session there instead of to the login.
+// Set to false when the real login works and before the final delivery.
 export const DEV_MODE = true;
+
+/** Where a user without a session goes. */
+export const loginPage = () => (DEV_MODE ? "/pages/dev/sesion-demo.html" : ROUTES.login);
